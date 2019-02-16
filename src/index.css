@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.cancelled {
+    color: red;
+}
+
+.started {
+    background-color: rgb(250, 250, 250);
+}
+
+.calendar-table {
+    border-collapse: collapse;
+}
+
+.calendar-table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.calendar-table td, .calendar-table th {
+    padding: .75rem;
+    border-top: 1px solid #dee2e6;
+}
