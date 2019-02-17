@@ -202,8 +202,14 @@ class App extends Component {
     mapCalendarEvent(event) {
         const now = moment();
         const cancelled = !!event.summary.match(/^\s*отмена!/i);
-        const links = event.description.match(/https?:\/\/[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/);
-        const forumLinks = event.description.match(/https?:\/\/4x4forum\.by\/\S+?\.html/);
+        let forumLink = null;
+
+        if (event.description) {
+            const links = event.description.match(/https?:\/\/[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/);
+            const forumLinks = event.description.match(/https?:\/\/4x4forum\.by\/\S+?\.html/);
+            forumLink = forumLinks ? forumLinks[0] : links ? links[0] : null
+        }
+
         const start = moment(event.start.date);
         const end = moment(event.end.date);
 
@@ -217,7 +223,7 @@ class App extends Component {
             end: end,
             cancelled: cancelled,
             started: start < now,
-            forumLink: forumLinks ? forumLinks[0] : links ? links[0] : null
+            forumLink: forumLink
         }
     }
 }
