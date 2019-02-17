@@ -23,9 +23,13 @@ class Calendar extends Component {
         const { classes } = this.props;
 
         const year = this.props.year;
-        const calendarEvents = this.props.events
-            .filter((event) => event.start.year() === year)
-            .map((event) => <CalendarEvent key={event.etag} event={event} />);
+        const filter = this.props.filter.toLowerCase();
+        let events = this.props.events.filter((event) => event.start.year() === year);
+        if (filter) {
+            events = events.filter((event) => event.summary.toLowerCase().indexOf(filter) !== -1)
+        }
+
+        const calendarEvents = events.map((event) => <CalendarEvent key={event.etag} event={event} />);
 
         return (
             <Paper className={classes.root}>

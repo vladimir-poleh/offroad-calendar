@@ -94,7 +94,8 @@ class App extends Component {
         this.state = {
             events: [],
             years: [],
-            year: ''
+            year: '',
+            filter: ''
         };
     }
 
@@ -104,9 +105,10 @@ class App extends Component {
 
     render() {
         const { classes } = this.props;
+        const { events, year, filter } = this.state;
 
-        const content = this.state.events && this.state.events.length
-            ? <Calendar events={this.state.events} year={this.state.year} />
+        const content = events && events.length
+            ? <Calendar events={events} year={year} filter={filter} />
             : <div>Нет данных</div>;
 
         const years = this.state.years.map((year) => <MenuItem value={year} key={year}>{year}</MenuItem>);
@@ -138,6 +140,7 @@ class App extends Component {
                                     root: classes.inputRoot,
                                     input: classes.inputInput,
                                 }}
+                                onChange={this.handleSearchChange}
                             />
                         </div>
                     </Toolbar>
@@ -150,7 +153,12 @@ class App extends Component {
     }
 
     handleYearChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
+        this.setState({ year: event.target.value });
+        window.scroll(0, 0);
+    }
+
+    handleSearchChange = (event) => {
+        this.setState({ filter: event.target.value.trim() });
     }
 
     loadData() {
