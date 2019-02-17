@@ -202,7 +202,7 @@ class App extends Component {
     mapCalendarEvent(event) {
         const now = moment();
         const cancelled = !!event.summary.match(/^\s*отмена!/i);
-        const links = event.description.match(/https?:\/\/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/);
+        const links = event.description.match(/https?:\/\/[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/);
         const forumLinks = event.description.match(/https?:\/\/4x4forum\.by\/\S+?\.html/);
         const start = moment(event.start.date);
         const end = moment(event.end.date);
