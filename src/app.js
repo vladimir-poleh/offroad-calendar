@@ -169,27 +169,9 @@ class App extends Component {
             const response = JSON.parse(http.response);
 
             if (response.items) {
-                const now = moment();
                 const events = response.items
                     .filter(i => i.kind === 'calendar#event')
-                    .map(i => {
-                        const cancelled = !!i.summary.match(/^\s*отмена!/i);
-                        const forumLinks = i.description.match(/http:\/\/4x4forum\.by\/\S+?\.html/);
-                        const start = moment(i.start.date);
-                        const end = moment(i.end.date);
-                        return {
-                            etag: i.etag,
-                            calendarLink: i.htmlLink,
-                            summary: i.summary,
-                            description: i.description,
-                            location: i.location,
-                            start: start,
-                            end: end,
-                            cancelled: cancelled,
-                            started: start < now,
-                            forumLink: forumLinks ? forumLinks[0] : null
-                        }
-                    });
+                    .map(this.mapCalendarEvent);
 
                 events.sort((a, b) => {
                     return a.start < b.start ? -1 : a.start > b.start ? 1 : 0;
@@ -214,6 +196,28 @@ class App extends Component {
         });
 
         http.send();
+    }
+
+    mapCalendarEvent(event) {
+        const now = moment();
+        const cancelled = !!event.summary.match(/^\s*отмена!/i);
+        const links = event.description.match(/https?:\/\/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/);
+        const forumLinks = event.description.match(/https?:\/\/4x4forum\.by\/\S+?\.html/);
+        const start = moment(event.start.date);
+        const end = moment(event.end.date);
+
+        return {
+            etag: event.etag,
+            calendarLink: event.htmlLink,
+            summary: event.summary,
+            description: event.description,
+            location: event.location,
+            start: start,
+            end: end,
+            cancelled: cancelled,
+            started: start < now,
+            forumLink: forumLinks ? forumLinks[0] : links ? links[0] : null
+        }
     }
 }
 
