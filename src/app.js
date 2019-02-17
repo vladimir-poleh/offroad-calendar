@@ -7,7 +7,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import moment from 'moment';
 import Calendar from './calendar';
 
@@ -17,6 +16,10 @@ const API_KEY = 'AIzaSyBjEOL_oeuRA5x2RB52NjvtHoucvjOEa3g';
 const styles = theme => ({
     root: {
         width: '100%',
+    },
+    appBar: {
+        backgroundColor: '#cadceb',
+        color: '#105289'
     },
     grow: {
         flexGrow: 1,
@@ -34,10 +37,7 @@ const styles = theme => ({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
-        },
+        backgroundColor: theme.palette.common.white,
         marginLeft: 0,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
@@ -77,10 +77,7 @@ const styles = theme => ({
         paddingLeft: theme.spacing.unit,
         margin: theme.spacing.unit,
         minWidth: 120,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
-        },
+        backgroundColor: theme.palette.common.white,
     },
     container: {
         marginTop: '64px',
@@ -116,7 +113,7 @@ class App extends Component {
 
         return (
             <div>
-                <AppBar position="fixed">
+                <AppBar position="fixed" className={classes.appBar}>
                     <Toolbar>
                         <Typography variant="h6" color="inherit">Календарь</Typography>
                         <div>
