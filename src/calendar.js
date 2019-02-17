@@ -24,7 +24,12 @@ class Calendar extends Component {
 
         const year = this.props.year;
         const filter = this.props.filter.toLowerCase();
-        let events = this.props.events.filter((event) => event.start.year() === year);
+        let events = this.props.events;
+
+        if (year) {
+            events = events.filter((event) => event.start.year() === year);
+        }
+
         if (filter) {
             events = events.filter((event) => event.summary.toLowerCase().indexOf(filter) !== -1)
         }

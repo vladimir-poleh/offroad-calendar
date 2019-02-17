@@ -125,7 +125,7 @@ class App extends Component {
                                 name="year"
                                 displayEmpty
                             >
-                                <MenuItem value="" disabled>Год</MenuItem>
+                                <MenuItem value="">Весь</MenuItem>
                                 {years}
                             </Select>
                         </div>
