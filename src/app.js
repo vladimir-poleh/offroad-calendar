@@ -83,7 +83,8 @@ const styles = theme => ({
         },
     },
     container: {
-        marginTop: '64px'
+        marginTop: '64px',
+        padding: theme.spacing.unit
     }
 });
 
