@@ -19,6 +19,13 @@ const styles = theme => ({
 });
 
 class Calendar extends Component {
+    constructor(props) {
+        super(props);
+
+        this.eventRefs = {};
+        this.nextEvent = undefined;
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -34,7 +41,9 @@ class Calendar extends Component {
             events = events.filter((event) => event.summary.toLowerCase().indexOf(filter) !== -1)
         }
 
-        const calendarEvents = events.map((event) => <CalendarEvent key={event.etag} event={event} />);
+        this.nextEvent = events.find(event => !event.started || event.current);
+
+        const calendarEvents = events.map((event) => <CalendarEvent key={event.etag} event={event} innerRef={this.eventRefs[event.etag] = React.createRef()} />);
 
         return (
             <Paper className={classes.root}>
@@ -53,6 +62,20 @@ class Calendar extends Component {
                 </Table>
             </Paper>
         );
+    }
+
+    componentDidMount() {
+        this.scrollToNextEvent();
+    }
+
+    componentDidUpdate() {
+        this.scrollToNextEvent();
+    }
+
+    scrollToNextEvent() {
+        if (this.nextEvent) {
+            this.eventRefs[this.nextEvent.etag].current.scrollTo();
+        }
     }
 }
 

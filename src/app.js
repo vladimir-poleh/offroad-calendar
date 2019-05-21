@@ -220,6 +220,7 @@ class App extends Component {
             end: end,
             cancelled: cancelled,
             started: start < now,
+            current: start < now && end > now,
             forumLink: forumLink
         }
     }
