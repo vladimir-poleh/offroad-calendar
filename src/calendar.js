@@ -23,7 +23,7 @@ class Calendar extends Component {
         super(props);
 
         this.eventRefs = {};
-        this.nextEvent = undefined;
+        this.nextEvent = null;
     }
 
     render() {
@@ -41,7 +41,8 @@ class Calendar extends Component {
             events = events.filter((event) => event.summary.toLowerCase().indexOf(filter) !== -1)
         }
 
-        this.nextEvent = events.find(event => !event.started || event.current);
+        const nextEvents = events.filter(event => !event.started || event.current);
+        this.nextEvent = nextEvents.length > 0 ? nextEvents[0] : null;
 
         const calendarEvents = events.map((event) => <CalendarEvent key={event.etag} event={event} innerRef={this.eventRefs[event.etag] = React.createRef()} />);
 
