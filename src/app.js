@@ -20,7 +20,7 @@ const styles = theme => ({
     },
     appBar: {
         backgroundColor: '#cadceb',
-        color: '#105289'
+        color: '#105289',
     },
     grow: {
         flexGrow: 1,
@@ -42,12 +42,12 @@ const styles = theme => ({
         marginLeft: 0,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing.unit,
+            marginLeft: theme.spacing(1),
             width: 'auto',
         },
     },
     searchIcon: {
-        width: theme.spacing.unit * 5,
+        width: theme.spacing(5),
         height: '100%',
         position: 'absolute',
         pointerEvents: 'none',
@@ -60,10 +60,10 @@ const styles = theme => ({
         width: '100%',
     },
     inputInput: {
-        paddingTop: theme.spacing.unit,
-        paddingRight: theme.spacing.unit,
-        paddingBottom: theme.spacing.unit,
-        paddingLeft: theme.spacing.unit * 5,
+        paddingTop: theme.spacing(1),
+        paddingRight: theme.spacing(1),
+        paddingBottom: theme.spacing(1),
+        paddingLeft: theme.spacing(5),
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
@@ -75,14 +75,14 @@ const styles = theme => ({
     },
     yearControl: {
         color: 'inherit',
-        paddingLeft: theme.spacing.unit,
-        margin: theme.spacing.unit,
+        paddingLeft: theme.spacing(1),
+        margin: theme.spacing(1),
         minWidth: 120,
         backgroundColor: theme.palette.common.white,
     },
     container: {
         marginTop: '64px',
-        padding: theme.spacing.unit
+        padding: theme.spacing(1),
     }
 });
 
