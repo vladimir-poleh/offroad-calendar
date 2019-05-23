@@ -7,6 +7,7 @@ import red from '@material-ui/core/colors/red';
 import grey from '@material-ui/core/colors/grey';
 import green from '@material-ui/core/colors/green';
 import NewTabLink from './new-tab-link';
+import Utils from './utils';
 
 const styles = theme => ({
     cancelled: {
@@ -48,11 +49,8 @@ class CalendarEvent extends Component {
             ? <NewTabLink href={event.forumLink} title={event.summary} />
             : event.summary;
 
-        let location = '';
-        if (event.location) {
-            const locationUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`;
-            location = <NewTabLink href={locationUrl} title={event.location} />
-        }
+        const locationUrl = Utils.getMapLink(event.location);
+        const location = locationUrl ? <NewTabLink href={locationUrl} title={event.location} /> : '';
 
         return (
             <RootRef rootRef={this.rootRef}>

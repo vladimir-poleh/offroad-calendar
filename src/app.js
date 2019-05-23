@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import Calendar from './calendar';
+import Utils from './utils';
 
 const CALENDAR_ID = 'dda9q2ui2pt8qerj9dk6t5npbo@group.calendar.google.com';
 const API_KEY = 'AIzaSyBjEOL_oeuRA5x2RB52NjvtHoucvjOEa3g';
@@ -198,12 +199,12 @@ class App extends Component {
 
     mapCalendarEvent(event) {
         const now = moment();
-        const cancelled = !!event.summary.match(/^\s*отмена!/i);
+        const cancelled = Utils.isCancelled(event);
         let forumLink = null;
 
         if (event.description) {
-            const links = event.description.match(/https?:\/\/[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/);
-            const forumLinks = event.description.match(/https?:\/\/4x4forum\.by\/\S+?\.html/);
+            const links = Utils.getLinks(event.description);
+            const forumLinks = Utils.getForumLinks(event.description);
             forumLink = forumLinks ? forumLinks[0] : links ? links[0] : null
         }
 
