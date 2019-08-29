@@ -208,8 +208,8 @@ class App extends Component {
             forumLink = forumLinks ? forumLinks[0] : links ? links[0] : null
         }
 
-        const start = moment(event.start.date);
-        const end = moment(event.end.date);
+        const start = moment(event.start.date || event.start.dateTime);
+        const end = moment(event.end.date || event.end.dateTime);
 
         return {
             etag: event.etag,
