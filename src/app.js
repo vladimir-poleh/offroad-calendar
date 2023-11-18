@@ -160,25 +160,40 @@ class App extends Component {
         this.setState({ filter: event.target.value.trim() });
     }
 
-    loadData() {
-        const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events?key=${API_KEY}`;
+    loadData(previous, pageToken) {
+        if (!previous) {
+            previous = [];
+        }
+
+        let url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events?key=${API_KEY}`;
+        if (pageToken) {
+            url = `${url}&pageToken=${encodeURIComponent(pageToken)}`
+        }
+
         const http = new XMLHttpRequest();
         http.open('GET', url);
         http.addEventListener('load', () => {
             const response = JSON.parse(http.response);
+            let result = [...previous]
 
             if (response.items) {
                 const events = response.items
                     .filter(i => i.kind === 'calendar#event')
                     .map(this.mapCalendarEvent);
 
-                events.sort((a, b) => {
+                result = [...result, ...events]
+            }
+
+            if (response.nextPageToken) {
+                this.loadData(result, response.nextPageToken);
+            } else {
+                result.sort((a, b) => {
                     return a.start < b.start ? -1 : a.start > b.start ? 1 : 0;
                 });
 
                 const years = [];
-                for (let i = 0; i < events.length; i++) {
-                    const year = events[i].start.year();
+                for (let i = 0; i < result.length; i++) {
+                    const year = result[i].start.year();
                     if (years.indexOf(year) === -1) {
                         years.push(year);
                     }
@@ -190,7 +205,7 @@ class App extends Component {
                     year = years.indexOf(currentYear) === -1 ? years[years.length - 1] : currentYear;
                 }
 
-                this.setState({ events: events, years: years, year: year });
+                this.setState({ events: result, years: years, year: year });
             }
         });
 
